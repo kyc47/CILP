@@ -56,7 +56,7 @@ class _Lecture2State extends State<Lecture2> {
   double y = 0;
   String x1 = "0";
   String y1 = "0";
-
+  bool _click = false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -90,12 +90,23 @@ class _Lecture2State extends State<Lecture2> {
                           painter:
                               MyPainter(px: x, py: y, width: 400, height: 50),
                         ),
-                        CustomPaint(
-                          size: Size(MediaQuery.of(context).size.width,
-                              MediaQuery.of(context).size.height),
-                          painter: MyPainter(
-                              px: x, py: y + 100, width: 800, height: 50),
-                        ),
+                        GestureDetector(
+                          onTap: ()async{
+                            //서버로 데이터전송 기능
+                            //3초정도 안에 안누르면 자동으로 버튼사라지게하는 기능
+                            // await Future.delayed(const Duration(seconds: 3), (){
+                            //   if(!_click){
+                            //     _click = true;
+                            //   }
+                            // });
+                          },
+                          child: CustomPaint(
+                            size: Size(MediaQuery.of(context).size.width,
+                                MediaQuery.of(context).size.height),
+                            painter: MyPainter(
+                                px: x, py: y + 100, width: 800, height: 50),
+                          ),
+                        )
                       ],
                     )),
 
