@@ -1,4 +1,5 @@
 import 'package:clip/lecture1.dart';
+import 'package:clip/lecture2.dart';
 import 'package:clip/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -107,7 +108,16 @@ class _SelectLectureState extends State<SelectLecture> {
                   //       inheritTheme: true,
                   //       ctx: context),
                   // );
-                  // });
+                  // });.
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child:
+                        Lecture2(uid: widget.uid),
+                        inheritTheme: true,
+                        ctx: context),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.deepPurple,

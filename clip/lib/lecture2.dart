@@ -5,15 +5,16 @@ import 'package:flutter/foundation.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:html' as html;
 
-class Lecture1 extends StatefulWidget {
-  const Lecture1({Key? key, required this.uid}) : super(key: key);
+
+class Lecture2 extends StatefulWidget {
+  const Lecture2({Key? key, required this.uid}) : super(key: key);
   final String uid;
 
   @override
-  _Lecture1State createState() => _Lecture1State();
+  _Lecture2State createState() => _Lecture2State();
 }
 
-class _Lecture1State extends State<Lecture1> {
+class _Lecture2State extends State<Lecture2> {
   late VideoPlayerController _controller;
 
   //
@@ -73,53 +74,31 @@ class _Lecture1State extends State<Lecture1> {
                 ClosedCaption(text: _controller.value.caption.text),
                 // _ControlsOverlay(controller: _controller),
                 VideoProgressIndicator(_controller, allowScrubbing: true),
-                // GestureDetector(
-                //     onTapDown: (detail) {
-                //       x = detail.globalPosition.dx;
-                //       y = detail.globalPosition.dy;
-                //     },
-                //     onDoubleTap: () {
-                //       setState(() {});
-                //     },
-                //     child: Stack(
-                //       children: [
-                //         CustomPaint(
-                //           size: Size(MediaQuery.of(context).size.width,
-                //               MediaQuery.of(context).size.height),
-                //           painter:
-                //               MyPainter(px: x, py: y, width: 400, height: 50),
-                //         ),
-                //         CustomPaint(
-                //           size: Size(MediaQuery.of(context).size.width,
-                //               MediaQuery.of(context).size.height),
-                //           painter: MyPainter(
-                //               px: x, py: y + 100, width: 800, height: 50),
-                //         ),
-                //       ],
-                //     )),
                 GestureDetector(
-                  onHorizontalDragStart: (detail) {
-                    setState(() {
-                      x1 = detail.globalPosition.dx.toString();
-                      y1 = detail.globalPosition.dy.toString();
-                    });
-                    // HCILocation()
-                    //     .getScreen(x1, y1, widget.uid, "lecture", "screen")
-                    //     .then((value) {
-                    //   setState(() {
-                    //     print("a");
-                    //   });
-                    // });
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Text(
-                      x1+"\n"+y1,
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                ),
+                    onTapDown: (detail) {
+                      x = detail.globalPosition.dx;
+                      y = detail.globalPosition.dy;
+                    },
+                    onDoubleTap: () {
+                      setState(() {});
+                    },
+                    child: Stack(
+                      children: [
+                        CustomPaint(
+                          size: Size(MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height),
+                          painter:
+                              MyPainter(px: x, py: y, width: 400, height: 50),
+                        ),
+                        CustomPaint(
+                          size: Size(MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height),
+                          painter: MyPainter(
+                              px: x, py: y + 100, width: 800, height: 50),
+                        ),
+                      ],
+                    )),
+
               ],
             ),
           ),
@@ -132,9 +111,9 @@ class _Lecture1State extends State<Lecture1> {
 class MyPainter extends CustomPainter {
   MyPainter(
       {@required this.px,
-      @required this.py,
-      @required this.width,
-      @required this.height});
+        @required this.py,
+        @required this.width,
+        @required this.height});
 
   final double? px;
   final double? py;
