@@ -1,4 +1,10 @@
-import 'package:clip/lecture_page1.dart';
+import 'package:clip/screen_check.dart';
+import 'package:clip/lecture_page2.dart';
+import 'package:clip/lecture_page3.dart';
+import 'package:clip/lecture_page4.dart';
+import 'package:clip/model.dart';
+import 'package:clip/network.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -128,34 +134,16 @@ class Body extends StatelessWidget {
   }
 
   Widget _formLogin(context) {
+    TextEditingController _textEditingController = TextEditingController();
+    User user = new User();
+
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextField(
+          controller: _textEditingController,
           decoration: InputDecoration(
-            hintText: 'Enter Phone number',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey[50]!),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey[50]!),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'Password',
-            suffixIcon: Icon(
-              Icons.visibility_off_outlined,
-              color: Colors.grey,
-            ),
+            hintText: '전달받은 번호를 입력해주세요.',
             filled: true,
             fillColor: Colors.blueGrey[50],
             labelStyle: TextStyle(fontSize: 12),
@@ -187,16 +175,22 @@ class Body extends StatelessWidget {
             child: Container(
                 width: double.infinity,
                 height: 50,
-                child: Center(child: Text("Sign In"))),
+                child: Center(child: Text("시작하기"))),
             onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: LectureTypeA(),
-                    inheritTheme: true,
-                    ctx: context),
-              );
+              Map map = {'user_id': _textEditingController.value.text};
+              print(map);
+              Sign().signIn(map, "sign").then((value) {
+                user = value;
+                Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: LeadyToLecture(uid: user.uid.toString(),),
+                      // child: LeadyToLecture(uid:"3d87125ce7c542daa9cfb8caaedcabd9"),
+                      inheritTheme: true,
+                      ctx: context),
+                );
+              });
             },
             style: ElevatedButton.styleFrom(
               primary: Colors.deepPurple,
@@ -208,33 +202,168 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.deepPurple[100]!,
-                spreadRadius: 10,
-                blurRadius: 20,
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            child: Container(
-                width: double.infinity,
-                height: 50,
-                child: Center(child: Text("Sign Up"))),
-            onPressed: () => print("it's pressed"),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.deepPurple,
-              onPrimary: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-        ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     borderRadius: BorderRadius.circular(30),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Colors.deepPurple[100]!,
+        //         spreadRadius: 10,
+        //         blurRadius: 20,
+        //       ),
+        //     ],
+        //   ),
+        //   child: ElevatedButton(
+        //     child: Container(
+        //         width: double.infinity,
+        //         height: 50,
+        //         child: Center(child: Text("Sign Up"))),
+        //     onPressed: () => print("it's pressed"),
+        //     style: ElevatedButton.styleFrom(
+        //       primary: Colors.deepPurple,
+        //       onPrimary: Colors.white,
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(15),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Row(
+        //   children: [
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.circular(30),
+        //         boxShadow: [
+        //           BoxShadow(
+        //             color: Colors.deepPurple[100]!,
+        //             spreadRadius: 10,
+        //             blurRadius: 20,
+        //           ),
+        //         ],
+        //       ),
+        //       child: ElevatedButton(
+        //         child: Container(
+        //             width: 20, height: 20, child: Center(child: Text("T2"))),
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             PageTransition(
+        //                 type: PageTransitionType.rightToLeft,
+        //                 child: LectureType2(),
+        //                 inheritTheme: true,
+        //                 ctx: context),
+        //           );
+        //         },
+        //         style: ElevatedButton.styleFrom(
+        //           primary: Colors.deepPurple,
+        //           onPrimary: Colors.white,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.circular(30),
+        //         boxShadow: [
+        //           BoxShadow(
+        //             color: Colors.deepPurple[100]!,
+        //             spreadRadius: 10,
+        //             blurRadius: 20,
+        //           ),
+        //         ],
+        //       ),
+        //       child: ElevatedButton(
+        //         child: Container(
+        //             width: 20, height: 20, child: Center(child: Text("T3"))),
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             PageTransition(
+        //                 type: PageTransitionType.rightToLeft,
+        //                 child: LectureType3(),
+        //                 inheritTheme: true,
+        //                 ctx: context),
+        //           );
+        //         },
+        //         style: ElevatedButton.styleFrom(
+        //           primary: Colors.deepPurple,
+        //           onPrimary: Colors.white,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.circular(30),
+        //         boxShadow: [
+        //           BoxShadow(
+        //             color: Colors.deepPurple[100]!,
+        //             spreadRadius: 10,
+        //             blurRadius: 20,
+        //           ),
+        //         ],
+        //       ),
+        //       child: ElevatedButton(
+        //         child: Container(
+        //             width: 20, height: 20, child: Center(child: Text("백엔드테스트"))),
+        //         onPressed: () async{
+        //           Map data = {"email": "email10", "password": "passwod","phone_number":"010404444444"};
+        //           String name = "user";
+        //           await signup(data, name);
+        //         },
+        //         style: ElevatedButton.styleFrom(
+        //           primary: Colors.deepPurple,
+        //           onPrimary: Colors.white,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.circular(30),
+        //         boxShadow: [
+        //           BoxShadow(
+        //             color: Colors.deepPurple[100]!,
+        //             spreadRadius: 10,
+        //             blurRadius: 20,
+        //           ),
+        //         ],
+        //       ),
+        //       child: ElevatedButton(
+        //         child: Container(
+        //             width: 20, height: 20, child: Center(child: Text("T4"))),
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             PageTransition(
+        //                 type: PageTransitionType.rightToLeft,
+        //                 child: LectureType4(),
+        //                 inheritTheme: true,
+        //                 ctx: context),
+        //           );
+        //         },
+        //         style: ElevatedButton.styleFrom(
+        //           primary: Colors.deepPurple,
+        //           onPrimary: Colors.white,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // )
       ],
     );
   }
