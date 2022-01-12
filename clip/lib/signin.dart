@@ -4,11 +4,13 @@ import 'package:clip/lecture_page3.dart';
 import 'package:clip/lecture_page4.dart';
 import 'package:clip/model.dart';
 import 'package:clip/network.dart';
+import 'package:clip/select_lecture.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -19,7 +21,6 @@ class LoginPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 8),
         children: [
-          Menu(),
           // MediaQuery.of(context).size.width >= 980
           //     ? Menu()
           //     : SizedBox(), // Responsive
@@ -35,19 +36,27 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _menuItem(title: 'Home'),
-              _menuItem(title: 'About us'),
-              _menuItem(title: 'Contact us'),
-              _menuItem(title: 'Help'),
-            ],
+      child: ElevatedButton(
+        child: Container(
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: 50,
+            child: Center(child: Text("실험 안내 페이지 바로가기"))),
+        onPressed: () async {
+          const url =
+              'https://abiding-moustache-7c8.notion.site/5d1581a9232b4ca798c49f4fd1d26a5b';
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.deepPurple,
+          onPrimary: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -98,12 +107,6 @@ class Body extends StatelessWidget {
             children: [
               Text(
                 'Contactless Interaction\nLecture Project',
-                // style: TextStyle(
-                //   fontFamily: GoogleF,
-                //   fontSize: 36,
-                //   color: Colors.deepPurple,
-                //   fontWeight: FontWeight.bold,
-                // ),
                 style: GoogleFonts.abel(
                   fontSize: 36,
                   color: Colors.deepPurple,
@@ -136,7 +139,7 @@ class Body extends StatelessWidget {
   Widget _formLogin(context) {
     TextEditingController _textEditingController = TextEditingController();
     User user = new User();
-
+    bool temp = false;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -176,21 +179,52 @@ class Body extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("시작하기"))),
-            onPressed: () {
+            onPressed: () async {
               Map map = {'user_id': _textEditingController.value.text};
-              print(map);
-              Sign().signIn(map, "sign").then((value) {
-                user = value;
-                Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: LeadyToLecture(uid: user.uid.toString(),),
-                      // child: LeadyToLecture(uid:"3d87125ce7c542daa9cfb8caaedcabd9"),
-                      inheritTheme: true,
-                      ctx: context),
+              var test = await Sign().signIn(map, "sign");
+              if (test == null) {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: Text('존재하지 않는 정보입니다.'),
+                    content:
+                        Text('번호를 확인해주세요.\n로그인 실패 시 01040449370으로 문의바랍니다.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
                 );
-              });
+              } else {
+                Sign().signIn(map, "sign").then((value) {
+                  user = value;
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('전체 화면을 통해 실험을 진행해주세요.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: SelectLecture(
+                                    uid: user.uid.toString(),
+                                  ),
+                                  inheritTheme: true,
+                                  ctx: context),
+                            );
+                          },
+                          child: const Text('확인'),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+              }
             },
             style: ElevatedButton.styleFrom(
               primary: Colors.deepPurple,
@@ -202,168 +236,28 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
-        // Container(
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.circular(30),
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: Colors.deepPurple[100]!,
-        //         spreadRadius: 10,
-        //         blurRadius: 20,
-        //       ),
-        //     ],
-        //   ),
-        //   child: ElevatedButton(
-        //     child: Container(
-        //         width: double.infinity,
-        //         height: 50,
-        //         child: Center(child: Text("Sign Up"))),
-        //     onPressed: () => print("it's pressed"),
-        //     style: ElevatedButton.styleFrom(
-        //       primary: Colors.deepPurple,
-        //       onPrimary: Colors.white,
-        //       shape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(15),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // Row(
-        //   children: [
-        //     Container(
-        //       decoration: BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius: BorderRadius.circular(30),
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Colors.deepPurple[100]!,
-        //             spreadRadius: 10,
-        //             blurRadius: 20,
-        //           ),
-        //         ],
-        //       ),
-        //       child: ElevatedButton(
-        //         child: Container(
-        //             width: 20, height: 20, child: Center(child: Text("T2"))),
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             PageTransition(
-        //                 type: PageTransitionType.rightToLeft,
-        //                 child: LectureType2(),
-        //                 inheritTheme: true,
-        //                 ctx: context),
-        //           );
-        //         },
-        //         style: ElevatedButton.styleFrom(
-        //           primary: Colors.deepPurple,
-        //           onPrimary: Colors.white,
-        //           shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(15),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     Container(
-        //       decoration: BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius: BorderRadius.circular(30),
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Colors.deepPurple[100]!,
-        //             spreadRadius: 10,
-        //             blurRadius: 20,
-        //           ),
-        //         ],
-        //       ),
-        //       child: ElevatedButton(
-        //         child: Container(
-        //             width: 20, height: 20, child: Center(child: Text("T3"))),
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             PageTransition(
-        //                 type: PageTransitionType.rightToLeft,
-        //                 child: LectureType3(),
-        //                 inheritTheme: true,
-        //                 ctx: context),
-        //           );
-        //         },
-        //         style: ElevatedButton.styleFrom(
-        //           primary: Colors.deepPurple,
-        //           onPrimary: Colors.white,
-        //           shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(15),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     Container(
-        //       decoration: BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius: BorderRadius.circular(30),
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Colors.deepPurple[100]!,
-        //             spreadRadius: 10,
-        //             blurRadius: 20,
-        //           ),
-        //         ],
-        //       ),
-        //       child: ElevatedButton(
-        //         child: Container(
-        //             width: 20, height: 20, child: Center(child: Text("백엔드테스트"))),
-        //         onPressed: () async{
-        //           Map data = {"email": "email10", "password": "passwod","phone_number":"010404444444"};
-        //           String name = "user";
-        //           await signup(data, name);
-        //         },
-        //         style: ElevatedButton.styleFrom(
-        //           primary: Colors.deepPurple,
-        //           onPrimary: Colors.white,
-        //           shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(15),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     Container(
-        //       decoration: BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius: BorderRadius.circular(30),
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Colors.deepPurple[100]!,
-        //             spreadRadius: 10,
-        //             blurRadius: 20,
-        //           ),
-        //         ],
-        //       ),
-        //       child: ElevatedButton(
-        //         child: Container(
-        //             width: 20, height: 20, child: Center(child: Text("T4"))),
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             PageTransition(
-        //                 type: PageTransitionType.rightToLeft,
-        //                 child: LectureType4(),
-        //                 inheritTheme: true,
-        //                 ctx: context),
-        //           );
-        //         },
-        //         style: ElevatedButton.styleFrom(
-        //           primary: Colors.deepPurple,
-        //           onPrimary: Colors.white,
-        //           shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(15),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // )
+        ElevatedButton(
+          child: Container(
+              width: double.infinity,
+              height: 50,
+              child: Center(child: Text("실험 안내 페이지 바로가기"))),
+          onPressed: () async {
+            const url =
+                'https://abiding-moustache-7c8.notion.site/5d1581a9232b4ca798c49f4fd1d26a5b';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw 'Could not launch $url';
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.orange,
+            onPrimary: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
       ],
     );
   }

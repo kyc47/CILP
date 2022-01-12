@@ -68,8 +68,8 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
                     ? SizedBox()
                     : GestureDetector(
                         onPanStart: (detail) {
-                          String X = detail.globalPosition.dy.toString();
-                          String Y = detail.globalPosition.dy.toString();
+                          double X = detail.globalPosition.dx;
+                          double Y = detail.globalPosition.dy;
                           HCILocation()
                               .getScreen(X, Y, widget.uid, "T-R", "screen")
                               .then((value) {
@@ -95,8 +95,8 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
                     ? SizedBox()
                     : GestureDetector(
                         onPanStart: (detail) {
-                          String X = detail.globalPosition.dy.toString();
-                          String Y = detail.globalPosition.dy.toString();
+                          double X = detail.globalPosition.dx;
+                          double Y = detail.globalPosition.dy;
                           HCILocation()
                               .getScreen(X, Y, widget.uid, "T-L", "screen")
                               .then((value) {
@@ -124,8 +124,8 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
                     ? SizedBox()
                     : GestureDetector(
                         onPanStart: (detail) {
-                          String X = detail.globalPosition.dy.toString();
-                          String Y = detail.globalPosition.dy.toString();
+                          double X = detail.globalPosition.dx;
+                          double Y = detail.globalPosition.dy;
                           HCILocation()
                               .getScreen(X, Y, widget.uid, "B-L", "screen")
                               .then((value) {
@@ -153,8 +153,8 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
                     ? SizedBox()
                     : GestureDetector(
                         onPanStart: (detail) {
-                          String X = detail.globalPosition.dy.toString();
-                          String Y = detail.globalPosition.dy.toString();
+                          double X = detail.globalPosition.dx;
+                          double Y = detail.globalPosition.dy;
                           HCILocation()
                               .getScreen(X, Y, widget.uid, "B-R", "screen")
                               .then((value) {

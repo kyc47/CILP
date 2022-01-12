@@ -13,7 +13,7 @@ import 'package:video_player/video_player.dart';
 import 'dart:html' as html;
 
 class LectureType4 extends StatefulWidget {
-  const LectureType4({Key? key}) : super(key: key);
+  // const LectureType4({Key? key}) : super(key: key);
 
   @override
   _LectureType4State createState() => _LectureType4State();

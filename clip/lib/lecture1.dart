@@ -31,9 +31,10 @@ class _Lecture1State extends State<Lecture1> {
     super.initState();
     _controller = VideoPlayerController.network(
       // 'https://vsu.play.kakao.com/vod/vcfe5In0dB00BP7B5aa005b/mp4/mp4_720P_2M_T1/clip.mp4?px-time=1628506206&px-bps=5687617&px-bufahead=12&px-hash=c5ea3cdd4c489563c5489e3bc59b4da5',
-      // 'http://vod.kmoocs.kr/vod/2017/01/05/a4c4e175-91b9-432e-a77c-3cb688222338.mp4?1629173947768',
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+        "http://vod.kmoocs.kr/vod/2020/08/12/ab0b11c7-e60d-453a-a334-10b90fca6791.mp4",
+      // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
       // closedCaptionFile: _loadCaptions(),
+      // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
 
@@ -55,9 +56,17 @@ class _Lecture1State extends State<Lecture1> {
   double y = 0;
   String x1 = "0";
   String y1 = "0";
+  bool _test = true;
 
   @override
   Widget build(BuildContext context) {
+    if (_test) {
+      _controller.play().then((value) {
+        setState(() {
+          _test = false;
+        });
+      });
+    }
     return Material(
       child: Scaffold(
         body: Container(
@@ -71,7 +80,7 @@ class _Lecture1State extends State<Lecture1> {
               children: <Widget>[
                 VideoPlayer(_controller),
                 ClosedCaption(text: _controller.value.caption.text),
-                // _ControlsOverlay(controller: _controller),
+                _ControlsOverlay(controller: _controller),
                 VideoProgressIndicator(_controller, allowScrubbing: true),
                 // GestureDetector(
                 //     onTapDown: (detail) {
@@ -115,7 +124,7 @@ class _Lecture1State extends State<Lecture1> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: Text(
-                      x1+"\n"+y1,
+                      x1 + "\n" + y1,
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
@@ -156,5 +165,78 @@ class MyPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter old) {
     return true;
+  }
+}
+
+class _ControlsOverlay extends StatelessWidget {
+  const _ControlsOverlay({Key? key, required this.controller})
+      : super(key: key);
+
+  static const _examplePlaybackRates = [
+    0.25,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    3.0,
+    5.0,
+    10.0,
+  ];
+
+  final VideoPlayerController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 50),
+          reverseDuration: Duration(milliseconds: 200),
+          child: controller.value.isPlaying
+              ? SizedBox.shrink()
+              : Container(
+                  color: Colors.black26,
+                  child: Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 100.0,
+                    ),
+                  ),
+                ),
+        ),
+        GestureDetector(
+          onTap: () {
+            controller.value.isPlaying ? controller.pause() : controller.play();
+          },
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: PopupMenuButton<double>(
+            initialValue: controller.value.playbackSpeed,
+            tooltip: 'Playback speed',
+            onSelected: (speed) {
+              controller.setPlaybackSpeed(speed);
+            },
+            itemBuilder: (context) {
+              return [
+                for (final speed in _examplePlaybackRates)
+                  PopupMenuItem(
+                    value: speed,
+                    child: Text('${speed}x'),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text('${controller.value.playbackSpeed}x'),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

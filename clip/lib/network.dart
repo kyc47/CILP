@@ -55,16 +55,9 @@ class Sign {
 }
 
 class HCILocation {
-
-
-  Future getScreen(String X, String Y, String uid, String description, String path) async {
-
-    Map data = {
-      "x": Y,
-      "y": X,
-      "uid": uid,
-      "description": description
-    };
+  Future getScreen(
+      double X, double Y, String uid, String description, String path) async {
+    Map data = {"x": Y, "y": X, "uid": uid, "description": description};
 
     String url = "$host${path}/";
     try {
@@ -86,25 +79,27 @@ class HCILocation {
     }
   }
 
-// Future signIn(Map data, String path) async {
-//   String url = "$host${path}/";
-//   try {
-//     var body = json.encode(data);
-//     final response = await http.post(Uri.parse(url),
-//         headers: {
-//           'Content-type': 'application/json',
-//           'Accept': 'application/json',
-//         },
-//         body: body);
-//     if (response.statusCode == 200) {
-//       return User.fromJSON(jsonDecode(response.body));
-//     } else if (response.statusCode == 400) {
-//       return response.statusCode;
-//     }
-//   } catch (e) {
-//     print(e);
-//     return null;
-//   }
-// }
-}
+  Future anomalyLog(String uid, double distance, int playtime) async {
+    String path = "anomalylog";
+    Map data = {"uid": uid, "distance": distance, "play_time": playtime};
 
+    String url = "$host${path}/";
+    try {
+      var body = json.encode(data);
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: body);
+      if (response.statusCode == 201) {
+        return User.fromJSON(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        return response.statusCode;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+}

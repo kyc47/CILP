@@ -415,6 +415,196 @@ class _LectureType3State extends State<LectureType3> {
                     ),
                   ),
                 ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.1),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.2),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.3),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.4),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.5),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.6),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.7),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.8),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       top: MediaQuery.of(context).size.height * 0.9),
+                //   height: 1,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: Colors.red,
+                // ),
+                // ////
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.05),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.1),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.15),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.2),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.25),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.3),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.35),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.4),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.45),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.5),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.55),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.6),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.65),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.7),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.75),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.8),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.85),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(
+                //       left: MediaQuery.of(context).size.width * 0.9),
+                //   height: MediaQuery.of(context).size.height,
+                //   width: 1,
+                //   color: Colors.red,
+                // ),
               ],
             ),
           ),

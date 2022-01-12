@@ -1,3 +1,6 @@
+import 'package:clip/lecture3.dart';
+import 'package:clip/lecture4.dart';
+import 'package:clip/network.dart';
 import 'package:clip/screen_check.dart';
 import 'package:clip/signin.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
+      initialRoute: "/",
       home: LoginPage(),
     );
   }

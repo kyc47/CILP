@@ -11,6 +11,7 @@ class User {
   final String? user_name;
   final String? created;
   final String? uid;
+  final String? user_type;
 
   User({
     this.userId,
@@ -20,6 +21,7 @@ class User {
     this.user_name,
     this.created,
     this.uid,
+    this.user_type,
   });
 
   factory User.fromJSON(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class User {
       user_name: json['user_name'],
       created: json['created_at'],
       uid: json['uid'],
+      user_type: json['user_type'],
     );
   }
 }
