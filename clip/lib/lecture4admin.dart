@@ -30,8 +30,8 @@ class _Lecture4AdminState extends State<Lecture4Admin> {
   //       .loadString('assets/bumble_bee_captions.srt');
   //   return SubRipCaptionFile(fileContents);
   // }
-  static final appContainer =
-      html.window.document.getElementById('app-container');
+  // static final appContainer =
+  //     html.window.document.getElementById('app-container');
 
   //
   final stopWatchTimer = StopWatchTimer(
@@ -57,7 +57,7 @@ class _Lecture4AdminState extends State<Lecture4Admin> {
     _controller.setLooping(false);
     _controller.initialize();
     var focusNode = FocusNode();
-    appContainer!.addEventListener('mouseout', (event) => mouseOut());
+    // appContainer!.addEventListener('mouseout', (event) => mouseOut());
   }
 
   @override

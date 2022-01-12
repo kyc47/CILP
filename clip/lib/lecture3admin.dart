@@ -1,4 +1,5 @@
 import 'package:clip/lecture4.dart';
+import 'package:clip/lecture4admin.dart';
 import 'package:clip/network.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _Lecture3AdminState extends State<Lecture3Admin> {
     _controller.setLooping(false);
     _controller.initialize();
     var focusNode = FocusNode();
-    appContainer!.addEventListener('mouseout', (event) => mouseOut());
+    // appContainer!.addEventListener('mouseout', (event) => mouseOut());
   }
 
   @override
@@ -197,7 +198,7 @@ class _Lecture3AdminState extends State<Lecture3Admin> {
                           context,
                           PageTransition(
                               type: PageTransitionType.rightToLeft,
-                              child: Lecture4(uid: widget.uid),
+                              child: Lecture4Admin(uid: widget.uid),
                               inheritTheme: true,
                               ctx: context),
                         );
@@ -226,8 +227,6 @@ class _Lecture3AdminState extends State<Lecture3Admin> {
                             setState(() {
                               _activateButton = false;
                             });
-                            print(details.globalPosition.dx.toDouble());
-                            print(details.globalPosition.dy.toDouble());
                           }
                           await HCILocation().getScreen(
                               details.globalPosition.dx.toDouble(),
