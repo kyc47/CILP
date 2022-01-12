@@ -30,11 +30,14 @@ class _Lecture4State extends State<Lecture4> {
   //       .loadString('assets/bumble_bee_captions.srt');
   //   return SubRipCaptionFile(fileContents);
   // }
+  static final appContainer =
+      html.window.document.getElementById('app-container');
 
   //
   final stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
   );
+  int timeValue = 0;
 
   mouseOut() async {
     await HCILocation().anomalyLog(widget.uid, -1, timeValue);
@@ -53,6 +56,8 @@ class _Lecture4State extends State<Lecture4> {
     _controller.addListener(() {});
     _controller.setLooping(false);
     _controller.initialize();
+    var focusNode = FocusNode();
+    appContainer!.addEventListener('mouseout', (event) => mouseOut());
   }
 
   @override
@@ -72,45 +77,39 @@ class _Lecture4State extends State<Lecture4> {
   bool _init = true;
 
   Map timeStamp = {
-    '1': [81, 88, 6, 12, 16, 34.8],
-    '2': [102, 109, 18.7, 81, 5.5, 6.2], //;;;
-    '3': [247, 254, 7.2, 87, 5.5, 9.3],
-    '4': [472, 479, 33, 58.5, 15.7, 36.2],
-    '5': [673, 680, 12, 54.5, 12, 49.5],
-    '6': [884, 891, 33, 59, 5.5, 16],
-    '7': [1016, 1023, 14.8, 55, 10.5, 32.8],
-    '8': [1107, 1113, 6.5, 5.5, 10, 26.5],
-    '9': [1213, 1220, 39.5, 48, 17, 29.5],
-    '10': [1390, 1397, 8.5, 67.2, 11, 52.7],
-    '11': [0, 0, 0, 0, 0, 0],
+    '1': [72, 79, 6, 12, 16, 34.8], //첫번째 선제골은?
+    '2': [472, 479, 33, 58.5, 15.7, 36.2], //새가슴. 내용을 모두 학습햇던 사람
+    '3': [1013, 1020, 14.8, 55, 10.5, 32.8], //성실하게
+    '4': [1123, 1130, 6.5, 5.5, 10, 26.5], //김성주의 노트
+    '5': [1222, 1227, 39.5, 48, 17, 29.5], //그 사람이
+    '6': [0, 0, 0, 0, 0, 0],
   };
 
   int timeInt1 = 1;
   List list = [];
-  int timeValue = 0;
   final StopWatchTimer _stopWatchTimer1 = StopWatchTimer();
-  double temp_value = 0;
+  double sendTimeValue = -1;
 
   @override
   Widget build(BuildContext context) {
     Stream.periodic(Duration(seconds: 5), (x) async {
       setState(() {
-        if (temp_value > 0) {
+        if (sendTimeValue > 0) {
           HCILocation()
-              .anomalyLog(
-                  widget.uid, temp_value, _controller.value.position.inSeconds)
+              .anomalyLog(widget.uid, sendTimeValue,
+                  _controller.value.position.inSeconds)
               .then((value) => null);
         }
       });
     }).listen((event) {
-      temp_value = 0;
+      sendTimeValue = -1;
     });
 
     return Material(
       child: Scaffold(
           body: MouseRegion(
         onHover: (PointerEvent details) async {
-          temp_value = temp_value + details.localDelta.distance;
+          sendTimeValue = sendTimeValue + details.localDelta.distance;
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -120,9 +119,7 @@ class _Lecture4State extends State<Lecture4> {
             child: Stack(
               children: [
                 VideoPlayer(_controller),
-                // ClosedCaption(text: _controller.value.caption.text),
-                // _ControlsOverlay(controller: _controller),
-                // VideoProgressIndicator(_controller, allowScrubbing: true),
+                VideoProgressIndicator(_controller, allowScrubbing: true),
                 _init
                     ? Center(
                         child: Container(
@@ -130,13 +127,6 @@ class _Lecture4State extends State<Lecture4> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.deepPurple[100]!,
-                                spreadRadius: 10,
-                                blurRadius: 20,
-                              ),
-                            ],
                           ),
                           child: ElevatedButton(
                             child: Container(
@@ -152,7 +142,7 @@ class _Lecture4State extends State<Lecture4> {
                               await _controller.play();
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.deepPurple,
+                              primary: Color(0xff041f43),
                               onPrimary: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -165,24 +155,29 @@ class _Lecture4State extends State<Lecture4> {
 
                 ValueListenableBuilder(
                   valueListenable: _controller,
-                  builder: (context, VideoPlayerValue value, child) {
-                    //Do Something with the value.
-                    return Text(value.position.toString());
-                  },
-                ),
-                ValueListenableBuilder(
-                  valueListenable: _controller,
                   builder: (context, VideoPlayerValue val, child) {
                     final value = val.position.inSeconds;
                     timeValue = value;
                     print(value);
                     print(timeInt1);
                     list = timeStamp[timeInt1.toString()];
-                    if (int.parse(value.toString()) > 1398) {
+                    if (int.parse(value.toString()) >= 1398) {
                       _stopWatchTimer1.onExecute.add(StopWatchExecute.stop);
                       _stopWatchTimer1.onExecute.add(StopWatchExecute.reset);
-                      _controller.dispose();
                       _controller.removeListener(() {});
+                      HCILocation()
+                          .getScreen(0, 0, widget.uid, "2 exper end",
+                              'experimentslecture')
+                          .then((value) {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: FinishScreen(uid: widget.uid),
+                              inheritTheme: true,
+                              ctx: context),
+                        );
+                      });
                     }
                     if (int.parse(value.toString()) >= list[0] &&
                         int.parse(value.toString()) <= list[1]) {
@@ -245,7 +240,7 @@ class _Lecture4State extends State<Lecture4> {
                         ),
                       );
                     } else if (int.parse(value.toString()) > list[1]) {
-                      if (timeInt1 <= 18) {
+                      if (timeInt1 <= 5) {
                         timeInt1 = 1 + timeInt1;
                       }
                       _click1a = false;

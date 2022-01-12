@@ -41,27 +41,27 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Center(
-                child: ElevatedButton(
-              child: Text(
-                "버튼에 적힌 번호를 순서대로 누르세요.",
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: SelectLecture(uid: widget.uid),
-                        inheritTheme: true,
-                        ctx: context)
-                );
-
-              },
-            )),
+            // Center(
+            //     child: ElevatedButton(
+            //   child: Text(
+            //     "버튼에 적힌 번호를 순서대로 누르세요.",
+            //     style: TextStyle(
+            //         color: Colors.blue,
+            //         fontSize: 30,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //         PageTransition(
+            //             type: PageTransitionType.rightToLeft,
+            //             child: SelectLecture(uid: widget.uid),
+            //             inheritTheme: true,
+            //             ctx: context)
+            //     );
+            //
+            //   },
+            // )),
             Align(
                 alignment: Alignment.topRight,
                 child: button1
@@ -147,42 +147,42 @@ class _LeadyToLectureState extends State<LeadyToLecture> {
                           ),
                         ),
                       )),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: button4
-                    ? SizedBox()
-                    : GestureDetector(
-                        onPanStart: (detail) {
-                          double X = detail.globalPosition.dx;
-                          double Y = detail.globalPosition.dy;
-                          HCILocation()
-                              .getScreen(X, Y, widget.uid, "B-R", "screen")
-                              .then((value) {
-                            setState(() {
-                              if (button3) {
-                                button4 = true;
-                              }
-                            });
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: SelectLecture(uid: widget.uid,),
-                                // child: LeadyToLecture(
-                                //     uid: "3d87125ce7c542daa9cfb8caaedcabd9"),
-                                inheritTheme: true,
-                                ctx: context);
-                          });
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.height * 0.05,
-                          alignment: Alignment.center,
-                          color: Colors.blue,
-                          child: Text(
-                            "4번",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )),
+            // Align(
+            //     alignment: Alignment.bottomRight,
+            //     child: button4
+            //         ? SizedBox()
+            //         : GestureDetector(
+            //             onPanStart: (detail) {
+            //               double X = detail.globalPosition.dx;
+            //               double Y = detail.globalPosition.dy;
+            //               HCILocation()
+            //                   .getScreen(X, Y, widget.uid, "B-R", "screen")
+            //                   .then((value) {
+            //                 setState(() {
+            //                   if (button3) {
+            //                     button4 = true;
+            //                   }
+            //                 });
+            //                 PageTransition(
+            //                     type: PageTransitionType.rightToLeft,
+            //                     child: SelectLecture(uid: widget.uid,),
+            //                     // child: LeadyToLecture(
+            //                     //     uid: "3d87125ce7c542daa9cfb8caaedcabd9"),
+            //                     inheritTheme: true,
+            //                     ctx: context);
+            //               });
+            //             },
+            //             child: Container(
+            //               height: MediaQuery.of(context).size.height * 0.05,
+            //               width: MediaQuery.of(context).size.height * 0.05,
+            //               alignment: Alignment.center,
+            //               color: Colors.blue,
+            //               child: Text(
+            //                 "4번",
+            //                 style: TextStyle(color: Colors.white),
+            //               ),
+            //             ),
+            //           )),
           ],
         ),
       ),

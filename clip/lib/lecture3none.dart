@@ -1,4 +1,5 @@
 import 'package:clip/lecture4.dart';
+import 'package:clip/lecture4none.dart';
 import 'package:clip/network.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +16,17 @@ String _url =
 // "http://vod.kmoocs.kr/vod/2017/01/06/5abd9481-56f4-43cf-ad96-049a22df17a5.mp4";
 bool _time1 = false;
 
-class Lecture3 extends StatefulWidget {
-  const Lecture3({Key? key, required this.uid}) : super(key: key);
+class Lecture3None extends StatefulWidget {
+  const Lecture3None({Key? key, required this.uid}) : super(key: key);
   final String uid;
 
   @override
-  _Lecture3State createState() => _Lecture3State();
+  _Lecture3NoneState createState() => _Lecture3NoneState();
 }
 
-class _Lecture3State extends State<Lecture3> {
+class _Lecture3NoneState extends State<Lecture3None> {
   late VideoPlayerController _controller;
 
-
-  //
   final stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
   );
@@ -76,16 +75,24 @@ class _Lecture3State extends State<Lecture3> {
 
   Map timeStamp = {
     '1': [32, 39, 16.8, 44, 10, 26.8], //사회적인
-    '2': [443, 450, 8.5, 62.5, 5.5, 18], //긴장이 수행
-    '3': [586, 593, 8, 49, 5.5, 38], //배컴의 패널트킥
-    '4': [693, 700, 14, 60, 5.5, 35.5], //과제 난이도
-    '5': [945, 952, 9.5, 52.5, 5.5, 43.5], //쉬운과제
-    '6': [1313, 1320, 8, 54, 11, 47.5], //타인ㄴ의 존재는 각성증가
-    '7': [1410, 1417, 8, 52.5, 5.5, 48.2], //타인의 존재가
-    '8': [1533, 1540, 8, 42, 5.5, 44], //주의 분산을 일으켜
-    '9': [1747, 1754, 8, 47, 5.5, 30.5], //예습
-    '10': [0, 0, 0, 0, 0, 0],
-
+    '2': [202, 209, 13, 63.5, 5.5, 27], //j 긴장했지만,
+    '3': [293, 300, 36, 42.5, 5.5, 26], //j 대표팀 주장으로
+    '4': [443, 450, 8.5, 62.5, 5.5, 18], //긴장이 수행
+    '5': [492, 499, 8, 28, 5.5, 45], //j 자신의 경험
+    '6': [586, 593, 8, 49, 5.5, 38], //배컴의 패널트킥
+    '7': [693, 700, 14, 60, 5.5, 35.5], //과제 난이도
+    '8': [751, 758, 8, 28, 5.5, 64], //j가슴 뛰고
+    '9': [945, 952, 9.5, 52.5, 5.5, 43.5], //쉬운과제
+    '10': [965, 972, 9.8, 57, 5.5, 44.5], //jj 어려운 과제
+    '11': [1230, 1237, 5, 14, 15, 36], //jj 타인의 존재가
+    '12': [1313, 1320, 8, 54, 11, 47.5], //타인ㄴ의 존재는 각성증가
+    '13': [1375, 1382, 5, 14, 15, 36], //jj 평가불안가설
+    '14': [1410, 1417, 8, 52.5, 5.5, 48.2], //타인의 존재가
+    '15': [1506, 1513, 5, 14, 15, 38], //jj  주의분산-갈등가설
+    '16': [1533, 1540, 8, 42, 5.5, 44], //주의 분산을 일으켜
+    '17': [1689, 1697, 8, 35, 11, 44], //jj 복습/쉬운 내용
+    '18': [1747, 1754, 8, 47, 5.5, 30.5], //예습
+    '19': [0, 0, 0, 0, 0, 0],
   };
 
   double dx = 0.0;
@@ -155,7 +162,6 @@ class _Lecture3State extends State<Lecture3> {
                         ),
                       )
                     : SizedBox(),
-
                 ValueListenableBuilder(
                   valueListenable: _controller,
                   builder: (context, VideoPlayerValue val, child) {
@@ -174,82 +180,13 @@ class _Lecture3State extends State<Lecture3> {
                           context,
                           PageTransition(
                               type: PageTransitionType.rightToLeft,
-                              child: Lecture4(uid: widget.uid),
+                              child: Lecture4None(uid: widget.uid),
                               inheritTheme: true,
                               ctx: context),
                         );
                       });
                     }
-                    if (int.parse(value.toString()) >= list[0] &&
-                        int.parse(value.toString()) <= list[1]) {
-                      if (_click1a == false &&
-                          int.parse(value.toString()) - list[0] > 6) {
-                        _click1b = true;
-                      }
-                      if (int.parse(value.toString()) == list[0]) {
-                        _activateButton = true;
-                      }
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (_click1a == false) {
-                              _click1a = true;
-                            }
-                          });
-                        },
-                        onTapDown: (TapDownDetails details) async {
-                          if (_activateButton) {
-                            setState(() {
-                              _activateButton = false;
-                            });
-                            print(details.globalPosition.dx.toDouble());
-                            print(details.globalPosition.dy.toDouble());
-                          }
-                          await HCILocation().getScreen(
-                              details.globalPosition.dx.toDouble(),
-                              details.globalPosition.dy.toDouble(),
-                              widget.uid,
-                              value.toString() + "sec_button_touch",
-                              'experimentslecture');
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            // image: DecorationImage(
-                            //   image: AssetImage(_click1a
-                            //       ? "assets/images/highlight2.png"
-                            //       : "assets/images/highlight1.png"),
-                            //   fit: BoxFit.cover,
-                            // ),
-                            color: _click1a
-                                ? Color(0x80C7EA46)
-                                : Color(0x80FFA500),
-                          ),
-                          margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width *
-                                  list[2] *
-                                  0.01,
-                              top: MediaQuery.of(context).size.height *
-                                  list[3] *
-                                  0.01),
-                          height: MediaQuery.of(context).size.height *
-                              list[4] *
-                              0.01,
-                          width: MediaQuery.of(context).size.width *
-                              list[5] *
-                              0.01,
-                        ),
-                      );
-                    } else if (int.parse(value.toString()) > list[1]) {
-                      if (timeInt1 <= 9) {
-                        timeInt1 = 1 + timeInt1;
-                      }
-                      _click1a = false;
-                      _click1b = false;
-                      return SizedBox();
-                    } else {
-                      return SizedBox();
-                    }
+                      return Container();
                   },
                 ),
               ],

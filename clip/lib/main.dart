@@ -1,7 +1,3 @@
-import 'package:clip/lecture3.dart';
-import 'package:clip/lecture4.dart';
-import 'package:clip/network.dart';
-import 'package:clip/screen_check.dart';
 import 'package:clip/signin.dart';
 import 'package:flutter/material.dart';
 import 'dart:html';

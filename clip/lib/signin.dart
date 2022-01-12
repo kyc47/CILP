@@ -109,7 +109,7 @@ class Body extends StatelessWidget {
                 'Contactless Interaction\nLecture Project',
                 style: GoogleFonts.abel(
                   fontSize: 36,
-                  color: Colors.deepPurple,
+                  color: Color(0xff084da7),
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
@@ -128,7 +128,7 @@ class Body extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: MediaQuery.of(context).size.height / 6),
           child: Container(
-            width: 320,
+            width: 360,
             child: _formLogin(context),
           ),
         )
@@ -141,15 +141,17 @@ class Body extends StatelessWidget {
     User user = new User();
     bool temp = false;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
           controller: _textEditingController,
           decoration: InputDecoration(
-            hintText: '전달받은 번호를 입력해주세요.',
+            hintStyle: TextStyle(color: Colors.white),
+            hintText: '휴대전화 번호를 입력하여 주세요.',
             filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
+            fillColor: Colors.blue,
+            labelStyle: TextStyle(fontSize: 15),
             contentPadding: EdgeInsets.only(left: 30),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blueGrey[50]!),
@@ -160,17 +162,43 @@ class Body extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
           ),
+          style: TextStyle(color: Colors.white),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "실험을 신청한 분의 휴대전화 번호를 입력해주세요.",
+          style: GoogleFonts.abel(
+            fontSize: 15,
+            color: Color(0xff084da7),
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          "실험 관련 문의 : 01040449370",
+          style: GoogleFonts.abel(
+            fontSize: 15,
+            color: Color(0xff084da7),
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.left,
         ),
         SizedBox(height: 40),
+
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.deepPurple[100]!,
-                spreadRadius: 10,
-                blurRadius: 20,
+                color: Colors.blueGrey,
+                spreadRadius: 3,
+                blurRadius: 6,
               ),
             ],
           ),
@@ -212,8 +240,8 @@ class Body extends StatelessWidget {
                               PageTransition(
                                   type: PageTransitionType.rightToLeft,
                                   child: SelectLecture(
-                                    uid: user.uid.toString(),
-                                  ),
+                                      uid: user.uid.toString(),
+                                      type: user.user_type.toString()),
                                   inheritTheme: true,
                                   ctx: context),
                             );
@@ -227,7 +255,7 @@ class Body extends StatelessWidget {
               }
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.deepPurple,
+              primary: Colors.blue,
               onPrimary: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -236,28 +264,28 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
-        ElevatedButton(
-          child: Container(
-              width: double.infinity,
-              height: 50,
-              child: Center(child: Text("실험 안내 페이지 바로가기"))),
-          onPressed: () async {
-            const url =
-                'https://abiding-moustache-7c8.notion.site/5d1581a9232b4ca798c49f4fd1d26a5b';
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Colors.orange,
-            onPrimary: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
+        // ElevatedButton(
+        //   child: Container(
+        //       width: double.infinity,
+        //       height: 50,
+        //       child: Center(child: Text("실험 안내 페이지 바로가기"))),
+        //   onPressed: () async {
+        //     const url =
+        //         'https://abiding-moustache-7c8.notion.site/5d1581a9232b4ca798c49f4fd1d26a5b';
+        //     if (await canLaunch(url)) {
+        //       await launch(url);
+        //     } else {
+        //       throw 'Could not launch $url';
+        //     }
+        //   },
+        //   style: ElevatedButton.styleFrom(
+        //     primary: Colors.orange,
+        //     onPrimary: Colors.white,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(15),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

@@ -15,17 +15,22 @@ String _url =
 // "http://vod.kmoocs.kr/vod/2017/01/06/5abd9481-56f4-43cf-ad96-049a22df17a5.mp4";
 bool _time1 = false;
 
-class Lecture3 extends StatefulWidget {
-  const Lecture3({Key? key, required this.uid}) : super(key: key);
+class Lecture3Admin extends StatefulWidget {
+  const Lecture3Admin({Key? key, required this.uid}) : super(key: key);
   final String uid;
 
   @override
-  _Lecture3State createState() => _Lecture3State();
+  _Lecture3AdminState createState() => _Lecture3AdminState();
 }
 
-class _Lecture3State extends State<Lecture3> {
+class _Lecture3AdminState extends State<Lecture3Admin> {
   late VideoPlayerController _controller;
 
+  // Future<ClosedCaptionFile> _loadCaptions() async {
+  //   final String fileContents = await DefaultAssetBundle.of(context)
+  //       .loadString('assets/bumble_bee_captions.srt');
+  //   return SubRipCaptionFile(fileContents);
+  // }
 
   //
   final stopWatchTimer = StopWatchTimer(
@@ -47,6 +52,7 @@ class _Lecture3State extends State<Lecture3> {
     _stopWatchTimer1.onExecute.add(StopWatchExecute.start);
     _controller = VideoPlayerController.network(
       _url,
+      // closedCaptionFile: _loadCaptions(),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
 
@@ -76,16 +82,24 @@ class _Lecture3State extends State<Lecture3> {
 
   Map timeStamp = {
     '1': [32, 39, 16.8, 44, 10, 26.8], //사회적인
-    '2': [443, 450, 8.5, 62.5, 5.5, 18], //긴장이 수행
-    '3': [586, 593, 8, 49, 5.5, 38], //배컴의 패널트킥
-    '4': [693, 700, 14, 60, 5.5, 35.5], //과제 난이도
-    '5': [945, 952, 9.5, 52.5, 5.5, 43.5], //쉬운과제
-    '6': [1313, 1320, 8, 54, 11, 47.5], //타인ㄴ의 존재는 각성증가
-    '7': [1410, 1417, 8, 52.5, 5.5, 48.2], //타인의 존재가
-    '8': [1533, 1540, 8, 42, 5.5, 44], //주의 분산을 일으켜
-    '9': [1747, 1754, 8, 47, 5.5, 30.5], //예습
-    '10': [0, 0, 0, 0, 0, 0],
-
+    '2': [202, 209, 13, 63.5, 5.5, 27], //j 긴장했지만,
+    '3': [293, 300, 36, 42.5, 5.5, 26], //j 대표팀 주장으로
+    '4': [443, 450, 8.5, 62.5, 5.5, 18], //긴장이 수행
+    '5': [492, 499, 8, 28, 5.5, 45], //j 자신의 경험
+    '6': [586, 593, 8, 49, 5.5, 38], //배컴의 패널트킥
+    '7': [693, 700, 14, 60, 5.5, 35.5], //과제 난이도
+    '8': [751, 758, 8, 28, 5.5, 64], //j가슴 뛰고
+    '9': [945, 952, 9.5, 52.5, 5.5, 43.5], //쉬운과제
+    '10': [965, 972, 9.8, 57, 5.5, 44.5], //jj 어려운 과제
+    '11': [1230, 1237, 5, 14, 15, 36], //jj 타인의 존재가
+    '12': [1313, 1320, 8, 54, 11, 47.5], //타인ㄴ의 존재는 각성증가
+    '13': [1375, 1382, 5, 14, 15, 36], //jj 평가불안가설
+    '14': [1410, 1417, 8, 52.5, 5.5, 48.2], //타인의 존재가
+    '15': [1506, 1513, 5, 14, 15, 38], //jj  주의분산-갈등가설
+    '16': [1533, 1540, 8, 42, 5.5, 44], //주의 분산을 일으켜
+    '17': [1689, 1697, 8, 35, 11, 44], //jj 복습/쉬운 내용
+    '18': [1747, 1754, 8, 47, 5.5, 30.5], //예습
+    '19': [0, 0, 0, 0, 0, 0],
   };
 
   double dx = 0.0;
@@ -125,6 +139,9 @@ class _Lecture3State extends State<Lecture3> {
             child: Stack(
               children: [
                 VideoPlayer(_controller),
+                ClosedCaption(text: _controller.value.caption.text),
+                _ControlsOverlay(controller: _controller),
+                VideoProgressIndicator(_controller, allowScrubbing: true),
                 _init
                     ? Center(
                         child: Container(
@@ -155,7 +172,13 @@ class _Lecture3State extends State<Lecture3> {
                         ),
                       )
                     : SizedBox(),
-
+                ValueListenableBuilder(
+                  valueListenable: _controller,
+                  builder: (context, VideoPlayerValue value, child) {
+                    //Do Something with the value.
+                    return Text(value.position.inSeconds.toString());
+                  },
+                ),
                 ValueListenableBuilder(
                   valueListenable: _controller,
                   builder: (context, VideoPlayerValue val, child) {
@@ -241,7 +264,7 @@ class _Lecture3State extends State<Lecture3> {
                         ),
                       );
                     } else if (int.parse(value.toString()) > list[1]) {
-                      if (timeInt1 <= 9) {
+                      if (timeInt1 <= 18) {
                         timeInt1 = 1 + timeInt1;
                       }
                       _click1a = false;
@@ -258,5 +281,82 @@ class _Lecture3State extends State<Lecture3> {
         ),
       ),
     ));
+  }
+}
+
+class _ControlsOverlay extends StatelessWidget {
+  const _ControlsOverlay({Key? key, required this.controller})
+      : super(key: key);
+
+  static const _examplePlaybackRates = [
+    0.25,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    3.0,
+    5.0,
+    10.0,
+  ];
+
+  final VideoPlayerController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 50),
+          reverseDuration: Duration(milliseconds: 200),
+          child: controller.value.isPlaying
+              ? SizedBox.shrink()
+              : Container(
+                  color: Colors.black26,
+                  child: Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 100.0,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                ),
+        ),
+        GestureDetector(
+          onTap: () {
+            controller.value.isPlaying ? controller.pause() : controller.play();
+          },
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: PopupMenuButton<double>(
+            initialValue: controller.value.playbackSpeed,
+            tooltip: 'Playback speed',
+            onSelected: (speed) {
+              controller.setPlaybackSpeed(speed);
+            },
+            itemBuilder: (context) {
+              return [
+                for (final speed in _examplePlaybackRates)
+                  PopupMenuItem(
+                    value: speed,
+                    child: Text('${speed}x'),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                // Using less vertical padding as the text is also longer
+                // horizontally, so it feels like it would need more spacing
+                // horizontally (matching the aspect ratio of the video).
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text('${controller.value.playbackSpeed}x'),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
