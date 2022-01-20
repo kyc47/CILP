@@ -1,10 +1,9 @@
 import 'package:clip/lecture1.dart';
 import 'package:clip/lecture2.dart';
-import 'package:clip/lecture3.dart';
+import 'package:clip/lecture_condition2_1.dart';
 import 'package:clip/lecture3admin.dart';
-import 'package:clip/lecture3all.dart';
-import 'package:clip/lecture3none.dart';
-import 'package:clip/lecture4.dart';
+import 'package:clip/lecture_condition3_1.dart';
+import 'package:clip/lecture_condition1_1.dart';
 import 'package:clip/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -124,7 +123,7 @@ class _SelectLectureState extends State<SelectLecture> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: Lecture3None(uid: widget.uid),
+                          child: LectureCondition1_1(uid: widget.uid),
                           inheritTheme: true,
                           ctx: context),
                     );
@@ -134,7 +133,7 @@ class _SelectLectureState extends State<SelectLecture> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: Lecture3(uid: widget.uid),
+                          child: LectureCondition2_1(uid: widget.uid),
                           inheritTheme: true,
                           ctx: context),
                     );
@@ -144,7 +143,7 @@ class _SelectLectureState extends State<SelectLecture> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: Lecture3All(uid: widget.uid),
+                          child: LectureCondition3_1(uid: widget.uid),
                           inheritTheme: true,
                           ctx: context),
                     );

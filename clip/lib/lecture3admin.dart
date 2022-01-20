@@ -1,4 +1,3 @@
-import 'package:clip/lecture4.dart';
 import 'package:clip/lecture4admin.dart';
 import 'package:clip/network.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,7 +41,7 @@ class _Lecture3AdminState extends State<Lecture3Admin> {
       html.window.document.getElementById('app-container');
 
   mouseOut() async {
-    await HCILocation().anomalyLog(widget.uid, -1, timeValue);
+    await HCILocation().mouseLog(widget.uid, -1, timeValue);
   }
 
   int timeValue = 0;
@@ -117,7 +116,7 @@ class _Lecture3AdminState extends State<Lecture3Admin> {
       setState(() {
         if (sendTimeValue > 0) {
           HCILocation()
-              .anomalyLog(widget.uid, sendTimeValue,
+              .mouseLog(widget.uid, sendTimeValue,
                   _controller.value.position.inSeconds)
               .then((value) => null);
         }

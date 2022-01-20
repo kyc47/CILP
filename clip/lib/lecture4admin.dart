@@ -40,7 +40,7 @@ class _Lecture4AdminState extends State<Lecture4Admin> {
   int timeValue = 0;
 
   mouseOut() async {
-    await HCILocation().anomalyLog(widget.uid, -1, timeValue);
+    await HCILocation().mouseLog(widget.uid, -1, timeValue);
   }
 
   @override
@@ -101,7 +101,7 @@ class _Lecture4AdminState extends State<Lecture4Admin> {
       setState(() {
         if (sendTimeValue > 0) {
           HCILocation()
-              .anomalyLog(widget.uid, sendTimeValue,
+              .mouseLog(widget.uid, sendTimeValue,
                   _controller.value.position.inSeconds)
               .then((value) => null);
         }

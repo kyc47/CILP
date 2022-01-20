@@ -79,9 +79,33 @@ class HCILocation {
     }
   }
 
-  Future anomalyLog(String uid, double distance, int playtime) async {
-    String path = "anomalylog";
+  Future mouseLog(String uid, double distance, int playtime) async {
+    String path = "mouse";
     Map data = {"uid": uid, "distance": distance, "play_time": playtime};
+
+    String url = "$host${path}/";
+    try {
+      var body = json.encode(data);
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: body);
+      if (response.statusCode == 201) {
+        return User.fromJSON(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        return response.statusCode;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future outLog(String uid, int playtime) async {
+    String path = "out";
+    Map data = {"uid": uid, "play_time": playtime};
 
     String url = "$host${path}/";
     try {
