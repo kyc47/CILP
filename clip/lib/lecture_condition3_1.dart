@@ -168,6 +168,30 @@ class _LectureCondition3_1State extends State<LectureCondition3_1> {
                                                   widget.uid,
                                                   'start1',
                                                   'experimentslecture');
+                                              await HCILocation().getScreen(
+                                                  MediaQuery.of(context)
+                                                      .size
+                                                      .width
+                                                      .toDouble(),
+                                                  MediaQuery.of(context)
+                                                      .size
+                                                      .height
+                                                      .toDouble(),
+                                                  widget.uid,
+                                                  'X, Y',
+                                                  'experimentslecture');
+                                              await HCILocation().getScreen(
+                                                  MediaQuery.of(context)
+                                                      .size
+                                                      .width
+                                                      .toDouble()*0.1,
+                                                  MediaQuery.of(context)
+                                                      .size
+                                                      .height
+                                                      .toDouble()*0.1,
+                                                  widget.uid,
+                                                  'x, Y * 0.1',
+                                                  'experimentslecture');
                                               await _controller.play();
                                             },
                                             style: ElevatedButton.styleFrom(
