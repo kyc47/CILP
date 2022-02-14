@@ -231,13 +231,14 @@ class _LectureCondition3_1State extends State<LectureCondition3_1> {
                                                   list[0] >
                                               6) {
                                         _click1b = true;
-                                        HCILocation().getScreen(
-                                            0,
-                                            0,
-                                            widget.uid,
-                                            value.toString() +
-                                                "sec donot",
-                                            'experimentslecture').then((value) => null);
+                                        HCILocation()
+                                            .getScreen(
+                                                0,
+                                                0,
+                                                widget.uid,
+                                                value.toString() + "sec donot",
+                                                'experimentslecture')
+                                            .then((value) => null);
                                       }
                                       if (int.parse(value.toString()) ==
                                           list[0]) {

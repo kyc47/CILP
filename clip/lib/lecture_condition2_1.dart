@@ -231,43 +231,44 @@ class _LectureCondition2_1State extends State<LectureCondition2_1> {
                                                   list[0] >
                                               6) {
                                         _click1b = true;
-                                        HCILocation().getScreen(
-                                            0,
-                                            0,
-                                            widget.uid,
-                                            value.toString() +
-                                                "sec donot",
-                                            'experimentslecture').then((value) => null);
+                                        HCILocation()
+                                            .getScreen(
+                                                0,
+                                                0,
+                                                widget.uid,
+                                                value.toString() + "sec donot",
+                                                'experimentslecture')
+                                            .then((value) => null);
                                       }
                                       if (int.parse(value.toString()) ==
                                           list[0]) {
                                         _activateButton = true;
                                       }
 
-                                      return GestureDetector(
-                                        onTap: () {
-                                          // setState(() {
-                                          //   if (_click1a == false) {
-                                          //     _click1a = true;
-                                          //   }
-                                          // });
-                                        },
-                                        onTapDown:
-                                            (TapDownDetails details) async {
+                                      return MouseRegion(
+                                        // onTap: () {
+                                        //   // setState(() {
+                                        //   //   if (_click1a == false) {
+                                        //   //     _click1a = true;
+                                        //   //   }
+                                        //   // });
+                                        // },
+                                        onHover: (PointerEvent details) async {
                                           if (_activateButton) {
                                             setState(() {
                                               _activateButton = false;
                                             });
+                                            if (_click1a == false) {
+                                              _click1a = true;
+                                              await HCILocation().getScreen(
+                                                  details.position.dx.toDouble(),
+                                                  details.position.dy.toDouble(),
+                                                  widget.uid,
+                                                  value.toString() + "sec_button_hover",
+                                                  'experimentslecture');
+                                            }
                                           }
-                                          await HCILocation().getScreen(
-                                              details.globalPosition.dx
-                                                  .toDouble(),
-                                              details.globalPosition.dy
-                                                  .toDouble(),
-                                              widget.uid,
-                                              value.toString() +
-                                                  "sec_button_touch",
-                                              'experimentslecture');
+
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -277,9 +278,10 @@ class _LectureCondition2_1State extends State<LectureCondition2_1> {
                                             //       : "assets/images/highlight1.png"),
                                             //   fit: BoxFit.cover,
                                             // ),
-                                            color: _click1a
-                                                ? Color(0x80C7EA46)
-                                                : Color(0x80FFA500),
+                                            // color: _click1a
+                                            //     ? Color(0x80C7EA46)
+                                            //     : Color(0x80FFA500),
+                                            color: Color(0x80FFA500),
                                           ),
                                           margin: EdgeInsets.only(
                                               left: MediaQuery.of(context)
